@@ -16,7 +16,11 @@ const ContactsStackScreen = () => (
     <ContactsStack.Screen
       name="ContactDetails"
       component={ContactDetails}
-      options={{ headerTitle: "Contact Details" }}
+      options={({ route }) => {
+        return {
+          headerTitle: route.params.contact.name.first,
+        };
+      }}
     />
   </ContactsStack.Navigator>
 );
