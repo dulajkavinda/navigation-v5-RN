@@ -3,12 +3,17 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import ContactsList from "../screens/ContactsList";
 import ContactDetails from "../screens/ContactDetails";
 
 import ActionsList from "../screens/ActionsList";
 import ActionDetails from "../screens/ActionDetails";
+
+import Settings from "../screens/Settings";
+
+import { Ionicons } from "@expo/vector-icons";
 
 const ContactsStack = createStackNavigator();
 const ContactsStackScreen = () => (
@@ -40,14 +45,48 @@ const ActionsStackScreen = () => (
 
 const AppTabs = createBottomTabNavigator();
 const AppTabsScreen = () => (
-  <AppTabs.Navigator>
+  <AppTabs.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+
+        if (route.name === "Contacts") {
+          iconName = focused
+            ? "ios-information-circle"
+            : "ios-information-circle-outline";
+        } else if (route.name === "Actions") {
+          iconName = focused ? "ios-list-box" : "ios-list";
+        }
+
+        // You can return any component that you like here!
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+    })}
+    tabBarOptions={{
+      activeTintColor: "white",
+      inactiveTintColor: "black",
+      activeBackgroundColor: "tomato",
+    }}
+  >
     <AppTabs.Screen name="Contacts" component={ContactsStackScreen} />
-    <AppTabs.Screen name="ActionsStackScreen" component={ActionsStackScreen} />
+    <AppTabs.Screen name="Actions" component={ActionsStackScreen} />
   </AppTabs.Navigator>
+);
+
+const AppDrawer = createDrawerNavigator();
+const AppDrawerScreen = () => (
+  <AppDrawer.Navigator drawerType="back">
+    <AppDrawer.Screen
+      name="Tabs"
+      component={AppTabsScreen}
+      options={{ drawerLabel: "Home" }}
+    />
+    <AppDrawer.Screen name="Settings" component={Settings} />
+  </AppDrawer.Navigator>
 );
 
 export default () => (
   <NavigationContainer>
-    <AppTabsScreen />
+    <AppDrawerScreen />
   </NavigationContainer>
 );
