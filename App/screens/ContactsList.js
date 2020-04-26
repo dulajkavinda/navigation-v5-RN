@@ -18,7 +18,9 @@ export default ({ navigation }) => (
           image={{ uri: item.picture.thumbnail }}
           title={name}
           subtitle={item.email}
-          onPress={() => navigation.push("ContactDetails", { contact: item })}
+          onPress={() =>
+            navigation.navigate("ContactDetails", { contact: item })
+          }
         />
       );
     }}
