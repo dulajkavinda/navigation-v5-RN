@@ -1,4 +1,4 @@
-# React Native School Master React Navigation V5 Class
+# React Native Navigation V5 
 
 Example project used in React Native School's class on Mastering React Navigation V5.
 
