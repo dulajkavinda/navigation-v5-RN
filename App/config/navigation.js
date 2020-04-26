@@ -11,6 +11,10 @@ import ContactDetails from "../screens/ContactDetails";
 import ActionsList from "../screens/ActionsList";
 import ActionDetails from "../screens/ActionDetails";
 
+import SignIn from "../screens/SignIn";
+import SignUp from "../screens/SignUp";
+import Loading from "../screens/Loading";
+
 import Settings from "../screens/Settings";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -85,8 +89,34 @@ const AppDrawerScreen = () => (
   </AppDrawer.Navigator>
 );
 
-export default () => (
-  <NavigationContainer>
-    <AppDrawerScreen />
-  </NavigationContainer>
+const AuthStack = createStackNavigator();
+const AuthStackScreen = () => (
+  <AuthStack.Navigator>
+    <AuthStack.Screen name="SignIn" component={SignIn} />
+    <AuthStack.Screen name="SignUp" component={SignUp} />
+  </AuthStack.Navigator>
 );
+
+export default () => {
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [user, setUser] = React.useState(null);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(!isLoading);
+      setUser({});
+    }, 500);
+  }, []);
+
+  return (
+    <NavigationContainer>
+      {isLoading ? (
+        <Loading />
+      ) : user ? (
+        <AppDrawerScreen />
+      ) : (
+        <AuthStackScreen />
+      )}
+    </NavigationContainer>
+  );
+};

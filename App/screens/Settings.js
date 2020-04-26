@@ -10,6 +10,12 @@ export default ({ navigation }) => {
           navigation.toggleDrawer();
         }}
       />
+      <Button
+        title="To Actions"
+        onPress={() => {
+          navigation.navigate("Tabs", { screen: "Actions" });
+        }}
+      />
     </SafeAreaView>
   );
 };
